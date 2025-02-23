@@ -4,12 +4,11 @@ import Header from './Header'
 import { checkValidData } from "../utils/validate";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../utils/firebase"
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { USER_AVATAR } from '../utils/constants';
 
 const Login = () => {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const [isSignInForm, setIsSignInForm] = useState(true);
@@ -55,12 +54,11 @@ const Login = () => {
                     const user = userCredential.user;
 
                     updateProfile(user, {
-                        displayName: name.current.value, photoURL: "https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg"
+                        displayName: name.current.value, photoURL: {USER_AVATAR}
                     }).then(() => {
                         // console.log(user)
                         const { uid, email, displayName, photoURL } = auth.currentUser;
                         dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL : photoURL }))
-                        navigate("/browse")
                     }).catch((error) => {
                         setErrorMessage(error.message)
                     });
@@ -78,9 +76,9 @@ const Login = () => {
             signInWithEmailAndPassword(auth, email.current.value, password.current.value)
                 .then((userCredential) => {
                     // Signed in 
+                    // eslint-disable-next-line no-unused-vars
                     const user = userCredential.user;
-                    console.log(user)
-                    navigate("/browse")
+                    // console.log(user)
                 })
                 .catch((error) => {
                     const errorCode = error.code;
