@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body {
+    overflow-x: hidden;
+    scrollbar-width: none; /* Only if you don’t want vertical scrolling */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
