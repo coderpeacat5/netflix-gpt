@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { auth } from "../utils/firebase"
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
-import { USER_AVATAR } from '../utils/constants';
+import { BG_URL, USER_AVATAR } from '../utils/constants';
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -54,7 +54,7 @@ const Login = () => {
                     const user = userCredential.user;
 
                     updateProfile(user, {
-                        displayName: name.current.value, photoURL: {USER_AVATAR}
+                        displayName: name.current.value, photoURL: USER_AVATAR
                     }).then(() => {
                         // console.log(user)
                         const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -92,9 +92,10 @@ const Login = () => {
         <div>
             <Header />
 
-            <div className='absolute max-h-screen'>
-                <img src='https://assets.nflxext.com/ffe/siteui/vlv3/0cf2c109-3af1-4a9d-87d7-aecfac5fe881/web/IN-en-20250217-TRIFECTA-perspective_c3376e06-9aff-4657-aafb-91256a597b7c_large.jpg'
-                    alt="bg-img" />
+            <div className='absolute inset-0 w-full h-full overflow-hidden'>
+                <img src={BG_URL}
+                    alt="bg-img" 
+                    className='w-full h-full object-cover bg-no-repeat'/>
             </div>
 
             <form
