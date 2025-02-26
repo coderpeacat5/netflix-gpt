@@ -27,66 +27,63 @@ const Login = () => {
         setIsSignInForm(!isSignInForm)
     }
 
-    const handleBtnClick = () => {
-        // Validate the form data
-
-        // console.log(email)
-        // console.log(password)
-
-        // const emailErr = checkValidEmail(email.current.value)
-        // setEmailErrMsg(emailErr)
-
-        // const passErr = checkValidPassword(password.current.value)
-        // setPassErrMsg(passErr)
-
-        // const nameErr = checkValidName(name.current.value)
-        // setNameErrMsg(nameErr)
+    const handleButtonClick = () => {
         const message = checkValidData(email.current.value, password.current.value);
-        // const message = checkValidData(email.current.value, password.current.value, name.current.value);
         setErrorMessage(message);
         if (message) return;
 
         if (!isSignInForm) {
             // Sign Up Logic
-            createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+            createUserWithEmailAndPassword(
+                auth,
+                email.current.value,
+                password.current.value
+            )
                 .then((userCredential) => {
-
                     const user = userCredential.user;
-
                     updateProfile(user, {
-                        displayName: name.current.value, photoURL: USER_AVATAR
-                    }).then(() => {
-                        // console.log(user)
-                        const { uid, email, displayName, photoURL } = auth.currentUser;
-                        dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL : photoURL }))
-                    }).catch((error) => {
-                        setErrorMessage(error.message)
-                    });
-
-
+                        displayName: name.current.value,
+                        photoURL: USER_AVATAR,
+                    })
+                        .then(() => {
+                            const { uid, email, displayName, photoURL } = auth.currentUser;
+                            dispatch(
+                                addUser({
+                                    uid: uid,
+                                    email: email,
+                                    displayName: displayName,
+                                    photoURL: photoURL,
+                                })
+                            );
+                        })
+                        .catch((error) => {
+                            setErrorMessage(error.message);
+                        });
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    setErrorMessage(errorCode + " " + errorMessage)
+                    setErrorMessage(errorCode + "-" + errorMessage);
                 });
-        }
-        else {
+        } else {
             // Sign In Logic
-            signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+            signInWithEmailAndPassword(
+                auth,
+                email.current.value,
+                password.current.value
+            )
                 .then((userCredential) => {
-                    // Signed in 
+                    // Signed in
                     // eslint-disable-next-line no-unused-vars
                     const user = userCredential.user;
-                    // console.log(user)
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    setErrorMessage(errorCode + " " + errorMessage)
+                    setErrorMessage(errorCode + "-" + errorMessage);
                 });
         }
-    }
+    };
 
     return (
         <div>
@@ -94,8 +91,8 @@ const Login = () => {
 
             <div className='absolute inset-0 w-full h-full overflow-hidden'>
                 <img src={BG_URL}
-                    alt="bg-img" 
-                    className='w-full h-full object-cover bg-no-repeat'/>
+                    alt="bg-img"
+                    className='w-full h-full object-cover bg-no-repeat' />
             </div>
 
             <form
@@ -123,7 +120,7 @@ const Login = () => {
                 <p className='text-red-500 my-3 p-1 text-sm font-medium'>{errorMessage}</p>
 
                 <button className='p-4 m-4 bg-red-700 text-white w-full rounded-sm hover:bg-red-800'
-                    onClick={handleBtnClick}>
+                    onClick={handleButtonClick}>
                     {isSignInForm ? "Sign In" : "Sign Up"}
                 </button>
 
