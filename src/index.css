@@ -4,8 +4,16 @@
 
 html, body {
     overflow-x: hidden;
-    scrollbar-width: none; /* Only if you don’t want vertical scrolling */
+    scrollbar-width: none; 
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
+
+  .scrollbar-hide {
+    scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
