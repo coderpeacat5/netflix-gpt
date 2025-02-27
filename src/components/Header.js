@@ -57,15 +57,15 @@ const Header = () => {
   }
 
   return (
-    <div className="w-full bg-gradient-to-b from-black flex justify-between absolute z-40">
+    <div className="w-full bg-gradient-to-b from-black flex flex-col md:flex-row justify-between absolute z-40">
 
-      <img src={LOGO_URL} alt="logo" className="w-72 px-6 py-2" />
+      <img src={LOGO_URL} alt="logo" className="w-72 px-6 py-2 mx-auto md:mx-0" />
 
 
       {user && (
-        <div className="p-6 z-20 flex items-center justify-between relative">
+        <div className="p-2 md:p-6 z-20 flex items-center justify-between relative">
 
-          {showGptSearch && <select className="p-2 mx-6 bg-black bg-opacity-60 text-white cursor-pointer focus:border rounded" onChange={handleLangChange}>
+          {showGptSearch && <select className="p-2 mx-0 md:mx-6 bg-black bg-opacity-60 text-white cursor-pointer focus:border rounded" onChange={handleLangChange}>
             {SUPPORTED_LANGUAGES.map((lang) => <option key={lang.identifier} value={lang.identifier} className="bg-black bg-opacity-60 text-white">{lang.name}</option>)}
           </select>}
 
@@ -73,7 +73,7 @@ const Header = () => {
             onClick={handleGptSearchClick}>{showGptSearch ? "Home" : "GPT Search"}</button>
 
           <img
-            className="w-12 h-12 mr-2 cursor-pointer"
+            className="w-12 h-12 md:mr-2 cursor-pointer hover:ring-2 hover:ring-offset-white"
             src={user?.photoURL}
             alt="user-icon"
             onClick={() => setShowDropdown(!showDropdown)}
@@ -81,22 +81,22 @@ const Header = () => {
 
           <button
             onClick={() => setShowDropdown(!showDropdown)}
-            className="text-white text-xl cursor-pointer"
+            className="text-white text-xl cursor-pointer hidden"
           >
             ▼
           </button>
 
           {showDropdown && (
-            <div className="absolute top-16 right-0 w-56 bg-gray-900 bg-opacity-95 rounded-lg shadow-lg p-2">
+            <div className="absolute top-16 md:top-[75%] right-0 md:right-4 w-40 md:w-56 bg-gray-900 bg-opacity-95 rounded-lg shadow-lg p-2">
               <div className="flex flex-col">
-                <div className="flex items-center space-x-3 p-2 hover:bg-gray-800 rounded">
-                  <img className="w-8 h-8 rounded-full" src={user?.photoURL} alt="profile" />
+                <div className="flex items-center space-x-3 p-1 md:p-2 hover:bg-gray-800 rounded">
+                  <img className="w-5 md:w-8 md:h-8 rounded-full" src={user?.photoURL} alt="profile" />
                   <span className="text-white">{user.displayName}</span>
                 </div>
-                <div className="border-t border-gray-700 my-2"></div>
+                <div className="border-t border-gray-700 my-1 md:my-2"></div>
                 <button
                   onClick={handleSignOut}
-                  className="block w-full text-left px-4 py-2 text-white hover:bg-gray-800 rounded"
+                  className="block w-full text-left md:px-4 px-1 pb-1 md:py-2 text-white hover:bg-gray-800 rounded"
                 >
                   Sign Out
                 </button>

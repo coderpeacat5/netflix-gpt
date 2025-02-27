@@ -18,13 +18,16 @@ const GptSearchPage = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <div className="fixed -z-10 ">
-        <img src={BG_URL} alt="bg-img"></img>
+    <>
+    <div className="fixed -z-10 ">
+        <img src={BG_URL} alt="bg-img" className="h-screen object-cover md:w-screen"></img>
       </div>
+      <div className="">
       <GptSearchBar />
       <GptMovieSuggestions />
       </div>
+    </>
+    
 
   )
 }
