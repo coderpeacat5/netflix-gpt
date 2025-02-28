@@ -15,9 +15,13 @@ const useTopRatedMovies = () => {
     }
 
     useEffect(() => {
-        !topRatedMovies && getTopRatedMovies()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+        const controller = new AbortController();
+        !topRatedMovies && getTopRatedMovies(controller.signal);
+    
+        return () => controller.abort(); // ✅ Cleanup
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    
 
 
 }

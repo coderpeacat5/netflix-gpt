@@ -22,9 +22,13 @@ const useMovieTrailer = (movieId) => {
     dispatch(addTrailerVideo(trailer));
   };
   useEffect(() => {
-    !trailerVideo && getMovieVideos();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const controller = new AbortController();
+    !trailerVideo && getMovieVideos(controller.signal);
+
+    return () => controller.abort(); // ✅ Cleanup
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+
 };
 
 export default useMovieTrailer;

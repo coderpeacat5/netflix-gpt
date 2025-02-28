@@ -15,8 +15,14 @@ const useUpcomingMovies = () => {
         dispatch(addUpcomingMovies(json.results))
     }
 
+    useEffect(() => {
+        const controller = new AbortController();
+        !upcomingMovies && getUpcomingMovies(controller.signal);
+    
+        return () => controller.abort(); // ✅ Cleanup
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => !upcomingMovies && getUpcomingMovies(), [])
+    }, []);
+    
  
 }
 

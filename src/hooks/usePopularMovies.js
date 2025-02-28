@@ -19,9 +19,13 @@ const usePopularMovies = () => {
   };
 
   useEffect(() => {
-    !popularMovies && getPopularMovies();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const controller = new AbortController();
+    !popularMovies && getPopularMovies(controller.signal);
+
+    return () => controller.abort(); // ✅ Cleanup
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+
 };
 
 export default usePopularMovies;

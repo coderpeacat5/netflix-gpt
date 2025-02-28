@@ -22,9 +22,13 @@ const useNowPlayingMovies = () => {
   };
 
   useEffect(() => {
-    !nowPlayingMovies && getNowPlayingMovies();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    const controller = new AbortController();
+    !nowPlayingMovies && getNowPlayingMovies(controller.signal);
+
+    return () => controller.abort(); // ✅ Cleanup
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+
 }
 
 export default useNowPlayingMovies
